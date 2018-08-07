@@ -41,6 +41,8 @@ class connect():
                 task1 = asyncio.ensure_future(self.danmuji.connectServer())
                 task2 = asyncio.ensure_future(self.danmuji.HeartbeatLoop())
                 connect.tasks[roomid] = [task1, task2]
+                # 只进一个房间
+                break
         except Exception as e:
                 print(e)
                 traceback.print_exc()
