@@ -2,6 +2,7 @@ from bilibili import bilibili
 from statistics import Statistics
 from printer import Printer
 from rafflehandler import Rafflehandler
+import configloader
 import utils
 import asyncio
 import random
@@ -10,11 +11,10 @@ import json
 import re
 import sys
 
-do_raffle = False
-
+probability = float(configloader.load_user('conf/user.conf')['print_control']['lottery_probability'])
 
 async def handle_1_TV_raffle(type, num, real_roomid, raffleid):
-    if do_raffle:
+    if random.random() < probability:
         # await asyncio.sleep(random.uniform(0.1, min(1, num * 1)))
         response2 = await bilibili().get_gift_of_TV(type, real_roomid, raffleid)
         # response1 = await bilibili().get_gift_of_events_app(real_roomid,raffleid)
@@ -31,7 +31,7 @@ async def handle_1_TV_raffle(type, num, real_roomid, raffleid):
 
 
 async def handle_1_activity_raffle(num, text1, raffleid):
-    if do_raffle:
+    if random.random() < probability:
         # await asyncio.sleep(random.uniform(0.1, min(1, num * 1)))
         response1 = await bilibili().get_gift_of_events_app(text1, raffleid)
         # pc_response = await bilibili().get_gift_of_events_web(text1, raffleid)

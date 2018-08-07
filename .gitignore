@@ -2,3 +2,4 @@ _conf/
 .DS_Store
 *.iml
 *.xml
+*.pyc
