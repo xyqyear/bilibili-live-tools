@@ -10,8 +10,8 @@ import struct
 import json
 import re
 import sys
-
-probability = float(configloader.load_user('conf/user.conf')['print_control']['lottery_probability'])
+with open('conf/lottery_probability.conf', 'r') as f:
+    probability = float(f.read())
 
 async def handle_1_TV_raffle(type, num, real_roomid, raffleid):
     if random.random() < probability:
