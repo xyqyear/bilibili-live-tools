@@ -10,44 +10,48 @@ import json
 import re
 import sys
 
+do_raffle = False
+
 
 async def handle_1_TV_raffle(type, num, real_roomid, raffleid):
-    # await asyncio.sleep(random.uniform(0.1, min(1, num * 1)))
-    response2 = await bilibili().get_gift_of_TV(type, real_roomid, raffleid)
-    # response1 = await bilibili().get_gift_of_events_app(real_roomid,raffleid)
-    Printer().printlist_append(['join_lottery', '广播道具', 'user', "参与了房间{:^9}的广播抽奖".format(real_roomid)], True)
-    # json_response1 = await response1.json()
-    json_response2 = await response2.json()
-    # print(json_response1)
-    Printer().printlist_append(
-        ['join_lottery', '广播道具', 'user', "广播道具抽奖状态: ", json_response2['msg']], True)
-    if json_response2['code'] == 0:
-        Statistics().append_to_TVlist(raffleid, real_roomid)
-    else:
-        print(json_response2)
+    if do_raffle:
+        # await asyncio.sleep(random.uniform(0.1, min(1, num * 1)))
+        response2 = await bilibili().get_gift_of_TV(type, real_roomid, raffleid)
+        # response1 = await bilibili().get_gift_of_events_app(real_roomid,raffleid)
+        Printer().printlist_append(['join_lottery', '广播道具', 'user', "参与了房间{:^9}的广播抽奖".format(real_roomid)], True)
+        # json_response1 = await response1.json()
+        json_response2 = await response2.json()
+        # print(json_response1)
+        Printer().printlist_append(
+            ['join_lottery', '广播道具', 'user', "广播道具抽奖状态: ", json_response2['msg']], True)
+        if json_response2['code'] == 0:
+            Statistics().append_to_TVlist(raffleid, real_roomid)
+        else:
+            print(json_response2)
 
 
 async def handle_1_activity_raffle(num, text1, raffleid):
-    # await asyncio.sleep(random.uniform(0.1, min(1, num * 1)))
-    response1 = await bilibili().get_gift_of_events_app(text1, raffleid)
-    # pc_response = await bilibili().get_gift_of_events_web(text1, raffleid)
+    if do_raffle:
+        # await asyncio.sleep(random.uniform(0.1, min(1, num * 1)))
+        response1 = await bilibili().get_gift_of_events_app(text1, raffleid)
+        # pc_response = await bilibili().get_gift_of_events_web(text1, raffleid)
 
-    Printer().printlist_append(['join_lottery', '', 'user', "参与了房间{:^9}的活动抽奖".format(text1)], True)
+        Printer().printlist_append(['join_lottery', '', 'user', "参与了房间{:^9}的活动抽奖".format(text1)], True)
 
-    json_response1 = await response1.json()
-    # json_pc_response = await pc_response.json()
-    # print(json_pc_response)
-    if json_response1['code'] == 0:
-        Printer().printlist_append(['join_lottery', '', 'user', "移动端活动抽奖结果: ",
-                                    json_response1['data']['gift_desc']], True)
-        Statistics().add_to_result(*(json_response1['data']['gift_desc'].split('X')))
-    else:
-        print(json_response1)
-        Printer().printlist_append(['join_lottery', '', 'user', "移动端活动抽奖结果: ", json_response1['message']], True)
-    # if json_pc_response['code'] == 0:
-    #     Statistics().append_to_activitylist(raffleid, text1)
-    # else:
-    #     print(json_pc_response)
+        json_response1 = await response1.json()
+        # json_pc_response = await pc_response.json()
+        # print(json_pc_response)
+        if json_response1['code'] == 0:
+            Printer().printlist_append(['join_lottery', '', 'user', "移动端活动抽奖结果: ",
+                                        json_response1['data']['gift_desc']], True)
+            Statistics().add_to_result(*(json_response1['data']['gift_desc'].split('X')))
+        else:
+            print(json_response1)
+            Printer().printlist_append(['join_lottery', '', 'user', "移动端活动抽奖结果: ", json_response1['message']], True)
+        # if json_pc_response['code'] == 0:
+        #     Statistics().append_to_activitylist(raffleid, text1)
+        # else:
+        #     print(json_pc_response)
 
 
 async def handle_1_room_TV(real_roomid):
