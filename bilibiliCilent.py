@@ -277,7 +277,7 @@ class bilibiliClient():
             Printer().printlist_append(['danmu', '弹幕', 'user', dic])
             return
         if cmd == 'SYS_GIFT':
-            print(dic)
+            #print(dic)
             try:
                 text1 = dic['real_roomid']
                 text2 = dic['url']
@@ -288,7 +288,7 @@ class bilibiliClient():
                 pass
             return
         if cmd == 'SYS_MSG':
-            print(dic)
+            #print(dic)
             if set(self.dic_bulletin) == set(dic):
                 Printer().printlist_append(['join_lottery', '系统公告', 'user', dic['msg']])
             else:
