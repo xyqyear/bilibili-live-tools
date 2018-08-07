@@ -60,5 +60,5 @@ class OnlineHeart():
                 login().login()
             await self.apppost_heartbeat()
             await self.heart_gift()
-            await self.draw_lottery()
+            # await self.draw_lottery()
             await asyncio.sleep(300)
