@@ -8,47 +8,6 @@ import struct
 import json
 import sys
 
-probability = 0
-
-async def handle_1_TV_raffle(type, num, real_roomid, raffleid):
-    if random.random() < probability:
-        return
-    await asyncio.sleep(random.uniform(1, 2))
-    response2 = await bilibili().get_gift_of_TV(type, real_roomid, raffleid)
-    Printer().printer(f"参与了房间 {real_roomid} 的广播抽奖", "Lottery", "cyan")
-    json_response2 = await response2.json(content_type=None)
-    Printer().printer(f"广播道具抽奖状态:{json_response2['msg']}", "Lottery", "cyan")
-    if json_response2['code'] == 0:
-        Statistics().append_to_TVlist(raffleid, real_roomid)
-    else:
-        print(json_response2)
-
-async def handle_1_room_TV(real_roomid):
-    await asyncio.sleep(random.uniform(1, 2))
-    result = await utils.check_room_true(real_roomid)
-    if True in result:
-        Printer().printer(f"检测到房间 {real_roomid} 的钓鱼操作", "Warning", "red")
-    else:
-        await bilibili().post_watching_history(real_roomid)
-        response = await bilibili().get_giftlist_of_TV(real_roomid)
-        json_response = await response.json(content_type=None)
-        checklen = json_response['data']['list']
-        num = len(checklen)
-        list_available_raffleid = []
-        for j in range(0, num):
-            raffleid = json_response['data']['list'][j]['raffleId']
-            type = json_response['data']['list'][j]['type']
-            if Statistics().check_TVlist(raffleid):
-                list_available_raffleid.append([type, raffleid])
-        tasklist = []
-        num_available = len(list_available_raffleid)
-        for k in list_available_raffleid:
-            task = asyncio.ensure_future(handle_1_TV_raffle(k[0], num_available, real_roomid, k[1]))
-            tasklist.append(task)
-        if tasklist:
-            await asyncio.wait(tasklist, return_when=asyncio.ALL_COMPLETED)
-
-
 class bilibiliClient():
 
     def __init__(self, roomid, area_name):
