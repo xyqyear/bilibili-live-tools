@@ -174,16 +174,7 @@ class bilibiliClient():
                 pass
             return
         elif cmd == 'SYS_MSG':
-            if set(self.dic_bulletin) == set(dic):
-                Printer().printer(dic['msg'], "Info", "green")
-            else:
-                try:
-                    real_roomid = dic['real_roomid']
-                    Printer().printer(f"检测到房间 {real_roomid} 的广播抽奖", "Lottery", "cyan")
-                    Statistics().append2pushed_TVlist()
-                except:
-                    print('SYS_MSG出错，请联系开发者', dic)
-            return
+            pass
         elif cmd == "WELCOME":
             pass
         elif cmd == "SEND_GIFT":
