@@ -1,7 +1,6 @@
 from bilibili import bilibili
 from statistics import Statistics
 from printer import Printer
-from rafflehandler import Rafflehandler
 import utils
 import asyncio
 import random
@@ -222,7 +221,6 @@ class bilibiliClient():
                 try:
                     real_roomid = dic['real_roomid']
                     Printer().printer(f"检测到房间 {real_roomid} 的广播抽奖", "Lottery", "cyan")
-                    Rafflehandler().append2list_TV(real_roomid)
                     Statistics().append2pushed_TVlist()
                 except:
                     print('SYS_MSG出错，请联系开发者', dic)
