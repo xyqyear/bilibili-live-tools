@@ -38,16 +38,6 @@ class connect():
                 connect.roomids.append(tmp[i][0])
             for n in range(len(tmp)):
                 connect.area_name.append(tmp[n][1])
-<<<<<<< HEAD
-            Printer().printlist_append(['join_lottery', '', 'user', "获取新的四个分区房间{0}[{1}]".format(connect.roomids,connect.area_name)], True)
-            for roomid, area_name in zip(connect.roomids, connect.area_name):
-                self.danmuji = bilibiliClient(roomid,area_name)
-                task1 = asyncio.ensure_future(self.danmuji.connectServer())
-                task2 = asyncio.ensure_future(self.danmuji.HeartbeatLoop())
-                connect.tasks[roomid] = [task1, task2]
-                # 只进一个房间
-                break
-=======
             Printer().printer(f"更新四个分区房间{connect.roomids}[{connect.area_name}]","Info","green")
 
             roomid = tmp[0][0]
@@ -56,7 +46,7 @@ class connect():
             task11 = asyncio.ensure_future(self.danmuji.connectServer())
             task21 = asyncio.ensure_future(self.danmuji.HeartbeatLoop())
             connect.tasks[roomid] = [task11, task21]
->>>>>>> upstream/master
+
         except Exception as e:
                 print(e)
                 traceback.print_exc()
