@@ -216,16 +216,8 @@ class bilibiliClient():
             # Printer().printer(f"出现了远古的SYS_GIFT,请尽快联系开发者{dic}", "Warning", "red")
             pass
         elif cmd == 'SYS_MSG':
-            if set(dic) in [set(self.dic_bulletin), {'cmd', 'msg', 'msg_text'}, {'cmd', 'msg', 'url'}]:
-                Printer().printer(f"{dic['msg']} @[{self.area}分区]{self._roomId}", "Info", "green")
-            else:
-                try:
-                    real_roomid = dic['real_roomid']
-                    Printer().printer(f"检测到房间 {real_roomid} 的广播抽奖 @[{self.area}分区]{self._roomId}", "Lottery", "cyan")
-                    Rafflehandler().append2list_TV(real_roomid)
-                    Statistics().append2pushed_TVlist(real_roomid, self.area[0])
-                except:
-                    Printer().printer(f"SYS_MSG出错，请联系开发者 {dic}", "Warning", "red")
+            # 别抽奖了
+            pass
 
         # 观众相关 [欢迎入场，送礼，发弹幕]
         elif cmd in ["WELCOME", "SEND_GIFT", "DANMU_MSG"]:
