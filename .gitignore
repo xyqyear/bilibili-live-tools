@@ -1,7 +1,8 @@
-
+_conf/
 .DS_Store
 *.iml
 *.xml
+*.pyc
 log.txt
 __pycache__/
 .idea/

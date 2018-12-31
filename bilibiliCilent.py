@@ -1,14 +1,12 @@
 from bilibili import bilibili
 from statistics import Statistics
 from printer import Printer
-from rafflehandler import Rafflehandler
 import utils
 import asyncio
 import random
 import struct
 import json
 import sys
-
 
 async def handle_1_TV_raffle(type, num, real_roomid, raffleid):
     await asyncio.sleep(random.uniform(0, min(num, 30)))
@@ -46,6 +44,7 @@ async def handle_1_room_TV(real_roomid):
             tasklist.append(task)
         if tasklist:
             await asyncio.wait(tasklist, return_when=asyncio.ALL_COMPLETED)
+
 
 
 class bilibiliClient():
@@ -230,6 +229,7 @@ class bilibiliClient():
 
         # 观众相关 [欢迎入场，送礼，发弹幕]
         elif cmd in ["WELCOME", "SEND_GIFT", "DANMU_MSG"]:
+
             pass
         # 各种通知 [通知（当前房间开奖 活动小时榜 各种SYS_MSG都会同时有NOTICE_MSG），系统通知（友爱社 心愿达成 绘马 主播招募 直播间强推）]
         elif cmd in ["NOTICE_MSG", "SYS_MSG"]:

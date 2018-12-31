@@ -118,7 +118,7 @@ class OnlineHeart:
                 await self.apppost_heartbeat()
                 await self.heart_gift()
                 await self.guard_lottery()
-                await self.draw_lottery()
+                # await self.draw_lottery()
                 await asyncio.sleep(300)
             except:
                 await asyncio.sleep(10)

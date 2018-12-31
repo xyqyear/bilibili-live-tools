@@ -3,7 +3,6 @@ from Silver import Silver
 from LotteryResult import LotteryResult
 from Tasks import Tasks
 from connect import connect
-from rafflehandler import Rafflehandler
 import asyncio
 from login import login
 from printer import Printer
@@ -17,7 +16,6 @@ loop1 = asyncio.get_event_loop()
 printer = Printer()
 bilibili()
 Statistics()
-rafflehandler = Rafflehandler()
 biliconsole.Biliconsole()
 
 task = OnlineHeart()
@@ -42,7 +40,6 @@ tasks = [
     biliconsole.Biliconsole().run(),
     task4.create(),
     task3.query(),
-    rafflehandler.run()
 
 ]
 
