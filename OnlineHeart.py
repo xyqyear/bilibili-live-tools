@@ -78,6 +78,7 @@ class OnlineHeart:
                 break
 
     async def run(self):
+        hour = ''
         while 1:
             try:
                 Printer().printer("心跳", "Info","green")
@@ -88,7 +89,11 @@ class OnlineHeart:
                     login().login()
                 await self.apppost_heartbeat()
                 await self.heart_gift()
-                await self.guard_lottery()
+                if time.strftime('%H') == hour:
+                    pass
+                else:
+                    hour = time.strftime('%H')
+                    await self.guard_lottery()
                 # await self.draw_lottery()
                 await asyncio.sleep(300)
             except:
