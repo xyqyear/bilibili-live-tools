@@ -224,6 +224,9 @@ async def check_room_true(roomid):
         param2 = data['is_locked']
         param3 = data['encrypted']
         return param1, param2, param3
+    else:
+        Printer().printer(f"获取房间信息出错: {json_response}", "Error", "red")
+        return [None]
 
 
 async def check_up_name(name):
@@ -234,7 +237,7 @@ async def check_up_name(name):
         temp = random.randint(0, len(name) - 1)
         split_str = name[temp:min(temp + 2, len(name))]
         response = await bilibili().query_guard(split_str)
-        json_response = await response.json
+        json_response = await response.json()
     for i in range(0, len(json_response['result'])):
         uname = str(json_response['result'][i]['uname'])
         temp = re.compile(r'<[^>]+>', re.S)
@@ -245,5 +248,12 @@ async def check_up_name(name):
     return roomid
 
 
-async def reconnect(area):
-    await connect().recreate(area)
+async def reconnect(area=None):
+    if area is not None:
+        await connect().recreate(area)
+    await connect().check_connect(area)
+
+
+async def check_area_list(area_list, **kwargs):
+    for area_id in area_list:
+        await connect().check_area(area_id, **kwargs)

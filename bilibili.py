@@ -84,6 +84,9 @@ class bilibili():
         while True:
             try:
                 response = await self.bili_section.post(url, headers=headers, data=data)
+                if response.status == 403:
+                    await asyncio.sleep(5)
+                    continue
                 tag = await self.replay_request(response)
                 if tag:
                     continue
@@ -91,12 +94,16 @@ class bilibili():
             except:
                 # print('当前网络不好，正在重试，请反馈开发者!!!!')
                 # print(sys.exc_info()[0], sys.exc_info()[1])
+                await asyncio.sleep(1)
                 continue
 
     async def bili_section_get(self, url, headers=None, data=None, params=None):
         while True:
             try:
                 response = await self.bili_section.get(url, headers=headers, data=data, params=params)
+                if response.status == 403:
+                    await asyncio.sleep(5)
+                    continue
                 tag = await self.replay_request(response)
                 if tag:
                     continue
@@ -104,6 +111,7 @@ class bilibili():
             except:
                 # print('当前网络不好，正在重试，请反馈开发者!!!!')
                 # print(sys.exc_info()[0], sys.exc_info()[1])
+                await asyncio.sleep(1)
                 continue
 
     # 1:900兑换
@@ -416,14 +424,14 @@ class bilibili():
         response2 = await self.bili_section_post(url, data=payload2, headers=self.dic_bilibili['appheaders'])
         return response2
 
-    def get_grouplist(self):
+    async def get_grouplist(self):
         url = "https://api.vc.bilibili.com/link_group/v1/member/my_groups"
         pcheaders = self.dic_bilibili['pcheaders'].copy()
         pcheaders['Host'] = "api.vc.bilibili.com"
-        response = requests.get(url, headers=pcheaders)
+        response = await self.bili_section_get(url, headers=pcheaders)
         return response
 
-    def assign_group(self, i1, i2):
+    async def assign_group(self, i1, i2):
         temp_params = "_device=" + self.dic_bilibili[
             'device'] + "&_hwid=SX1NL0wuHCsaKRt4BHhIfRguTXxOfj5WN1BkBTdLfhstTn9NfUouFiUV&access_key=" + \
                       self.dic_bilibili['access_key'] + "&appkey=" + self.dic_bilibili['appkey'] + "&build=" + \
@@ -434,7 +442,7 @@ class bilibili():
         url = "https://api.vc.bilibili.com/link_setting/v1/link_setting/sign_in?" + temp_params + "&sign=" + sign
         appheaders = self.dic_bilibili['appheaders'].copy()
         appheaders['Host'] = "api.vc.bilibili.com"
-        response = requests.get(url, headers=appheaders)
+        response = await self.bili_section_get(url, headers=appheaders)
         return response
 
     async def gift_list(self):
@@ -452,7 +460,14 @@ class bilibili():
         response = await self.bili_section_get(search_url)
         return response
 
-    async def check_room_state(self,roomid):
-        init_url = "https://api.live.bilibili.com/room/v1/Room/room_init?id="+str(roomid)
+    async def check_room_state(self, roomid):
+        init_url = "https://api.live.bilibili.com/room/v1/Room/room_init?id=" + str(roomid)
         response = await self.bili_section_get(init_url)
+        json_response = await response.json(content_type=None)
+        state = json_response['data']['live_status']
+        return state
+
+    async def check_room_info(self, roomid):
+        url = "https://api.live.bilibili.com/room/v1/Room/get_info?room_id=" + str(roomid)
+        response = await self.bili_section_get(url)
         return response
