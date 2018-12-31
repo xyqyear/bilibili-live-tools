@@ -1,6 +1,6 @@
 from OnlineHeart import OnlineHeart
 from Silver import Silver
-from LotteryResult import LotteryResult
+#from LotteryResult import LotteryResult
 from Tasks import Tasks
 from connect import connect
 import asyncio
@@ -21,7 +21,7 @@ biliconsole.Biliconsole()
 task = OnlineHeart()
 task1 = Silver()
 task2 = Tasks()
-task3 = LotteryResult()
+#task3 = LotteryResult()
 task4 = connect()
 
 console_thread = threading.Thread(target=biliconsole.controler)
@@ -39,7 +39,7 @@ tasks = [
     task2.run(),
     biliconsole.Biliconsole().run(),
     task4.create(),
-    task3.query(),
+    #task3.query(),
 
 ]
 

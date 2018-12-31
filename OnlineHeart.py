@@ -117,7 +117,7 @@ class OnlineHeart:
                     Printer().printer(f"cookie过期,将重新登录","Error","red")
                     login().login()
                 await self.apppost_heartbeat()
-                await self.heart_gift()
+                # await self.heart_gift()
                 if time.strftime('%H') == hour:
                     pass
                 else:
