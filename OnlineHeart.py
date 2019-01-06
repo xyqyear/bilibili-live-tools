@@ -107,7 +107,7 @@ class OnlineHeart:
                     last_lottery = json_response['code']
 
     async def run(self):
-        hour = ''
+        day = ''
         while 1:
             try:
                 Printer().printer("心跳", "Info","green")
@@ -118,10 +118,10 @@ class OnlineHeart:
                     login().login()
                 await self.apppost_heartbeat()
                 # await self.heart_gift()
-                if time.strftime('%H') == hour:
+                if time.strftime('%d') == day:
                     pass
                 else:
-                    hour = time.strftime('%H')
+                    day = time.strftime('%d')
                     await self.guard_lottery()
                 # await self.draw_lottery()
                 await asyncio.sleep(300)
