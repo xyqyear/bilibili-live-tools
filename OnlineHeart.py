@@ -122,7 +122,7 @@ class OnlineHeart:
                     pass
                 else:
                     day = time.strftime('%d')
-                    await self.guard_lottery()
+                    # await self.guard_lottery()
                 # await self.draw_lottery()
                 await asyncio.sleep(300)
             except:
